@@ -91,7 +91,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void changeNameForDeveloper(){
+    public void changeNameForEmployeeDeveloper(){
         //Setup
         var employeeServiceImpl = new EmployeeServiceImpl();
         Employee employee = new Developer("Developer2", 19, 750.00, "information technology","C#");
@@ -103,7 +103,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void changeNameForManager(){
+    public void changeNameForEmployeeManager(){
         //Setup
         var employeeServiceImpl = new EmployeeServiceImpl();
         Employee employee = new Manager("Manager2", 32, 1900.00, "operations management",5);
@@ -115,7 +115,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void changeAgeForDeveloper(){
+    public void changeAgeForEmployeeDeveloper(){
         //Setup
         var employeeServiceImpl = new EmployeeServiceImpl();
         Employee employee = new Developer("Developer2", 19, 750.00, "information technology","C#");
@@ -127,7 +127,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void changeAgeForManager(){
+    public void changeAgeForEmployeeManager(){
         //Setup
         var employeeServiceImpl = new EmployeeServiceImpl();
         Employee employee = new Manager("Manager1", 45, 2900.00, "marketing",15);
@@ -139,7 +139,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void fireEmployeeFromEmployeeList(){
+    public void fireEmployeeFromEmployeeListSearchingByEmpoyee(){
         //Setup
         var employeeServiceImpl = new EmployeeServiceImpl();
         List<Employee> employeeList = new ArrayList<>();
@@ -233,7 +233,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void listAllEmployeesFromEmployeesList (){
+    public void listAllEmployeesFromEmployeesListToPrintMessageToConsole (){
         //Setup
         System.setOut(new PrintStream(outputStreamCaptor));
         Employee employee1 =new Developer("Developer2", 19, 750.00, "information technology","C#");
@@ -281,7 +281,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    public void findEmployeeByNameInEmployeesListWhenEmployeeNotFound () {
+    public void findEmployeeByNameInEmployeesListWhenEmployeeNotFoundAndReturnNull () {
         //Setup
         Employee employee1 =new Developer("Developer2", 19, 750.00, "information technology","C#");
         Employee employee2 =new Manager("Manager1", 45, 2900.00, "marketing",15);
