@@ -168,4 +168,132 @@ class EmployeeServiceImplTest {
         assertEquals(false, employeeList.contains(employee2));
     }
 
+    @Test
+    public void calculateBonusForManager(){
+        //Setup
+        Employee employee = new Manager("Manager1", 45, 2900.00, "marketing",15);
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        double newSalary = employee.getSalary() * 1.10;
+        //Execute
+        employeeServiceImpl.calculateBonus(employee);
+        //Assert
+        assertEquals(newSalary, employee.getSalary());
+    }
+
+    @Test
+    public void calculateBonusForDeveloper(){
+        //Setup
+        Employee employee = new Developer("Developer3", 39, 3900.00, "information technology","Java");
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        double newSalary = employee.getSalary() * 1.05;
+        //Execute
+        employeeServiceImpl.calculateBonus(employee);
+        //Assert
+        assertEquals(newSalary, employee.getSalary());
+    }
+
+    @Test
+    public  void evaluatePerformanceThanEaqual9(){
+        //Setup
+        Employee employee =new Developer("Developer2", 19, 750.00, "information technology","C#");
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        int performance = 9;
+        double newSalary = employee.getSalary() * 1.10;
+        //Execute
+        employeeServiceImpl.evaluatePerformance(employee, performance);
+        //Assert
+        assertEquals(newSalary, employee.getSalary());
+    }
+
+    @Test
+    public  void evaluatePerformanceLessThan7(){
+        //Setup
+        System.setOut(new PrintStream(outputStreamCaptor));
+        Employee employee =new Developer("Developer2", 19, 750.00, "information technology","C#");
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        String expectedString = "Darbuotojo veikla nepatenkinama.\r\n";
+        int performance = 6;
+        //Execute
+        employeeServiceImpl.evaluatePerformance(employee, performance);
+        //Assert
+        assertEquals(expectedString, outputStreamCaptor.toString());
+        System.setOut(standardOut);
+    }
+
+    @Test
+    public void transferEmployeeToNewDepartment (){
+        //Setup
+        Employee employee = new Developer("Developer1", 25, 1200.00, "information technology","Java");
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        String newDepartment = "operations management";
+        //Execute
+        employeeServiceImpl.transferDepartment(employee, newDepartment);
+        //Assert
+        assertEquals(newDepartment, employee.getDepartment());
+    }
+
+    @Test
+    public void listAllEmployeesFromEmployeesList (){
+        //Setup
+        System.setOut(new PrintStream(outputStreamCaptor));
+        Employee employee1 =new Developer("Developer2", 19, 750.00, "information technology","C#");
+        Employee employee2 =new Manager("Manager1", 45, 2900.00, "marketing",15);
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        var employeeServiceImpl = new EmployeeServiceImpl();
+
+        String tempDvlp = String.format("%.2f", ((Developer) employeeList.get(0)).getSalary());
+        String expectedString = ("Vardas: " + employeeList.get(0).getName() +
+                ", amžius " + employeeList.get(0).getAge() +
+                ", uždarbis " + tempDvlp +
+                ", departamentas " + employeeList.get(0).getDepartment() +
+                ", programavimo kalba " + ((Developer) employeeList.get(0)).getProgrLang()) + "\r\n";
+
+        String tempMng = String.format("%.2f", ((Manager) employeeList.get(1)).getSalary());
+        expectedString += ("Vardas: " + employeeList.get(1).getName() +
+                ", amžius " + employeeList.get(1).getAge() +
+                ", uždarbis " + tempMng +
+                ", departamentas " + employeeList.get(1).getDepartment() +
+                ", komandos dydis " + ((Manager) employeeList.get(1)).getTeamSize()) + "\r\n";
+
+        //Execute
+        employeeServiceImpl.listAllEmployees(employeeList);
+        //Assert
+        assertEquals(expectedString, outputStreamCaptor.toString());
+        System.setOut(standardOut);
+    }
+
+    @Test
+    public void findEmployeeByNameInEmployeesList () {
+        //Setup
+        Employee employee1 =new Developer("Developer2", 19, 750.00, "information technology","C#");
+        Employee employee2 =new Manager("Manager1", 45, 2900.00, "marketing",15);
+        Employee employee3 = new Developer("Developer1", 25, 1200.00, "information technology","Java");
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        employeeList.add(employee3);
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        String searchName = "Developer1";
+        //Assert
+        assertEquals(employee3, employeeServiceImpl.findEmployeeByName(employeeList, searchName));
+    }
+
+    @Test
+    public void findEmployeeByNameInEmployeesListWhenEmployeeNotFound () {
+        //Setup
+        Employee employee1 =new Developer("Developer2", 19, 750.00, "information technology","C#");
+        Employee employee2 =new Manager("Manager1", 45, 2900.00, "marketing",15);
+        Employee employee3 = new Developer("Developer1", 25, 1200.00, "information technology","Java");
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        employeeList.add(employee3);
+        var employeeServiceImpl = new EmployeeServiceImpl();
+        String searchName = "Developer10";
+        //Assert
+        assertEquals(null, employeeServiceImpl.findEmployeeByName(employeeList, searchName));
+    }
+
 }
